@@ -234,6 +234,25 @@ function run_sim() {
 	};
 	Plotly.newPlot('total_div', data,layout);
 
+	var trace = {
+	    x: total_values,
+	    type: 'histogram',
+	    cumulative: {enabled: true},
+	    nbins: 100,
+	    histnorm: 'percent',
+	  };
+	var data = [trace];
+
+	var layout = {
+	  bargap: 0.01, 
+	  barmode: "overlay", 
+	  title: "Cumulative", 
+	  xaxis: {title: "Returns ($)"}, 
+	  yaxis: {title: "Cumulative Pct. of Simulations"},
+	  margin:{t: 50},
+	};
+	Plotly.newPlot('total_div_cumu', data,layout);	
+
 
 	html_results = '<h1 align="center">Results &#8212; Inflation Adjusted</h1><table align="center">';
 	html_results += `<tr><td>Min:</td><td>$${numberWithCommas(Math.round(total_values_min_inf))}</td></tr>`;
@@ -266,5 +285,23 @@ function run_sim() {
 	  yaxis: {title: "Pct. of Simulations"}
 	};
 	Plotly.newPlot('total_inf_div', data_inf,layout_inf);	
+
+	var trace_inf = {
+	    x: total_values_inflation,
+	    type: 'histogram',
+	    cumulative: {enabled: true},
+	    nbins: 100,
+	    histnorm: 'percent',
+	  };
+	var data_inf = [trace_inf];
+
+	var layout_inf = {
+	  bargap: 0.01, 
+	  barmode: "overlay", 
+	  title: "Cumulative", 
+	  xaxis: {title: "Returns ($)"}, 
+	  yaxis: {title: "Cumaltive Pct. of Simulations"}
+	};
+	Plotly.newPlot('total_inf_div_cumu', data_inf,layout_inf);		
 
 }
