@@ -1,0 +1,82 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="This site runs a monte carlo simulation of investment returns by randomly sampling historical returns.">
+<meta name=”robots” content="index, follow"> 
+
+<style>
+
+* {
+ font-family: Open Sans, Verdana, Arial, Sans-serif;
+}
+
+p,table {
+ font-size: 12px;
+}
+
+
+</style>
+<title>FIRE Monte Carlo Simulator</title>
+
+<script type="text/javascript" src="jquery-3.6.3.slim.min.js"></script>
+<script type="text/javascript" src="jquery.csv.js"></script>
+<!-- <script src="https://d3js.org/d3.v7.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.plot.ly/plotly-2.18.0.min.js"></script>
+
+</head>
+
+<body>
+
+<h1 align="center">FIRE Simulator</h1><br>
+
+<table border="0px" width="90%" align="center">
+<tr>
+<td valign="top">
+
+<table>
+<!-- <tr><td>How many runs?</td><td><input type="number" id="num_runs" name="num_runs" value="1000"></td></tr> -->
+<tr><td>Starting investment:</td><td><input type="number" id="starting" name="starting" value="1000000" min="0" /></td><td>The initial total amount of invested savings</td></tr>
+<tr><td>Annual contribution:</td><td><input type="number" id="annual" name="annual" value="0" /></td><td>How much is added every year</td></tr>
+<tr><td>Percent bonds:</td><td><input type="number" id="pct_bonds" name="pct_bonds" value="5" min="0" max="100" /></td><td>Percent of savings in bonds (the rest is assumed to be in stocks)</td></tr>
+<tr><td>Target retirement amount</td><td><input type="number" id="retire_amount" name="retire_amount" value="4000000" min="0" /></td><td>How much you want to have at retirement</td></tr>
+</table>
+
+</br>
+
+<button onclick="run_sim()">Run Simulations</button></br></br>
+<div id="total"></div>
+<div id='total_div' width="80%"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id='total_div_cumu' width="80%"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id="middle_section"></div>
+<div id="total_inflation"></div>
+<div id='total_inf_div'><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id='total_inf_div_cumu'><!-- Plotly chart will be drawn inside this DIV --></div>
+
+</td>
+<td valign="top" width="30%">
+<h2>About</h2>
+<p>This site runs a monte carlo simulation of investment returns by randomly sampling historical returns for the S&P 500 (with dividends reinvested), treasury yield (for bonds) and inflation rates. It runs 10,000 iterations to create distributions of possible future returns.</p>
+<p><b>Alternative:</b> <a href="index.html">Simulation that calculates expected return after X years.</a></p>
+<h4>Caveats</h4>
+<ul>
+	<li>Maximum annual stock returns are capped at 40% (to be more conservative)</li>
+	<li>Maximum annual inflation is capped at 15% (to avoid some very high historical years)</li>
+	<li>Minimum annual inflation is capped at 0.5%
+	<li>Maximum bond returns are capped at 10% (to be more conservative)</li>
+</ul>
+</p>
+<h4>Underlying Data Distributions (ingnoring caps)</h4>
+<div id='stock_dist' width="80%" align="center"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id='bonds_dist' width="80%" align="center"><!-- Plotly chart will be drawn inside this DIV --></div>
+<div id='inf_dist' width="80%" align="center"><!-- Plotly chart will be drawn inside this DIV --></div>
+</td>
+</tr>
+</table>
+
+<script type="text/javascript" src="data.js"></script>
+<script type="text/javascript" src="calculator_target_years.js"></script>
+
+
+</body>
+
+</html>
